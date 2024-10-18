@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { signinSchema } from './schemas'
 
 import {
     Form,
@@ -27,23 +28,17 @@ import {
 } from '@/components/ui/form'
 import Link from 'next/link'
 
-const formSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(1, 'Password must be at least 1 character'),
-})
-
-
 function SigninComponent() {
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof signinSchema>>({
+        resolver: zodResolver(signinSchema),
         defaultValues: {
             email: '',
             password: '',
         }
     })
 
-    const onSubmit = (data: z.infer<typeof formSchema>) => {
+    const onSubmit = (data: z.infer<typeof signinSchema>) => {
         console.log(data);
     }
 
