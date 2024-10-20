@@ -27,17 +27,15 @@ import {
     FormItem,
     FormMessage
 } from '@/components/ui/form'
-
-const formSchema = z.object({
-    name: z.string().trim().min(1, 'Name is required'),
-    email: z.string().email(),
-    password: z.string().min(8, 'Password must be at least 8 characters'),
-})
+import { signupSchema } from './schemas'
+import { useSignup } from '../api/use-signup'
 
 function SignupComponent() {
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const { mutate } = useSignup()
+
+    const form = useForm<z.infer<typeof signupSchema>>({
+        resolver: zodResolver(signupSchema),
         defaultValues: {
             name: '',
             email: '',
@@ -45,8 +43,8 @@ function SignupComponent() {
         }
     })
 
-    const onSubmit = (data: z.infer<typeof formSchema>) => {
-        console.log(data);
+    const onSubmit = (data: z.infer<typeof signupSchema>) => {
+        mutate({ json: data })
     }
 
     return (
@@ -55,7 +53,7 @@ function SignupComponent() {
                 <CardTitle className='text-2xl'>Sign Up</CardTitle>
                 <CardDescription>By signing up you agree to the
                     <Link href="/privacy">
-                        <span className='text-blue-700'>terms and conditions</span>
+                        <span className='text-blue-700'>{" "}terms and conditions</span>
                     </Link>
                 </CardDescription>
             </CardHeader>

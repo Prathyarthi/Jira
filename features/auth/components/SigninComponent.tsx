@@ -27,8 +27,11 @@ import {
     FormMessage
 } from '@/components/ui/form'
 import Link from 'next/link'
+import { useSignin } from '../api/use-login'
 
 function SigninComponent() {
+
+    const { mutate } = useSignin()
 
     const form = useForm<z.infer<typeof signinSchema>>({
         resolver: zodResolver(signinSchema),
@@ -39,7 +42,7 @@ function SigninComponent() {
     })
 
     const onSubmit = (data: z.infer<typeof signinSchema>) => {
-        console.log(data);
+        mutate({ json: data })
     }
 
     return (
