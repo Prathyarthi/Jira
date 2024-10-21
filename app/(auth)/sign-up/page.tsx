@@ -1,10 +1,17 @@
-"use client"
-
+import { getCurrent } from '@/features/auth/actions'
 import SignupComponent from '@/features/auth/components/SignupComponent'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
-function Signup() {
-    return <SignupComponent/>
+async function Signup() {
+
+    const user = await getCurrent()
+
+    if (user) {
+        redirect('/')
+    }
+
+    return <SignupComponent />
 }
 
 export default Signup

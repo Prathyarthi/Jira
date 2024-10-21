@@ -31,7 +31,7 @@ import { useSignin } from '../api/use-login'
 
 function SigninComponent() {
 
-    const { mutate } = useSignin()
+    const { mutate, isPending } = useSignin()
 
     const form = useForm<z.infer<typeof signinSchema>>({
         resolver: zodResolver(signinSchema),
@@ -73,7 +73,7 @@ function SigninComponent() {
                                 <FormMessage />
                             </FormItem>
                         )} />
-                        <Button size='lg' className='w-full'>Sign in</Button>
+                        <Button disabled={isPending} size='lg' className='w-full'>Sign in</Button>
                     </form>
                 </Form>
             </CardContent>
@@ -81,11 +81,11 @@ function SigninComponent() {
                 <DottedSeparator />
             </div>
             <CardContent className='p-7 flex flex-col gap-y-4'>
-                <Button disabled={false} variant="secondary" size="lg" className='w-full'>
+                <Button disabled={isPending} variant="secondary" size="lg" className='w-full'>
                     <FcGoogle className='mr-2 size-5' />
                     Login with Google
                 </Button>
-                <Button disabled={false} variant="secondary" size="lg" className='w-full'>
+                <Button disabled={isPending} variant="secondary" size="lg" className='w-full'>
                     <FaGithub className='mr-2 size-5' />
                     Login with Github
                 </Button>
