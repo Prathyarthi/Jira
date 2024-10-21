@@ -8,7 +8,7 @@ import { deleteCookie, setCookie } from "hono/cookie";
 import { sessionMiddleware } from "@/lib/sessionMiddleware";
 
 const app = new Hono()
-    .post("signup", zValidator("json", signupSchema), async (c) => {
+    .post("/signup", zValidator("json", signupSchema), async (c) => {
         const { name, email, password } = c.req.valid("json")
 
         const { account } = await createAdminClient()
