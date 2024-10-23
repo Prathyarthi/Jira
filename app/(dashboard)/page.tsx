@@ -1,4 +1,5 @@
 import { getCurrent } from "@/features/auth/actions";
+import CreateWorkspace from "@/features/workspaces/components/CreateWorkspace";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
@@ -10,8 +11,8 @@ export default async function Home() {
   }
 
   return (
-    <div>
-      Hey there!
+    <div className="bg-neutral-500 p-4 h-full">
+      <CreateWorkspace />
     </div>
   )
 }
