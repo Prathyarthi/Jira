@@ -3,6 +3,7 @@ import { InferRequestType, InferResponseType } from "hono";
 
 import { client } from '@/lib/rpc'
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type ResponseType = InferResponseType<typeof client.api.auth.signin["$post"]>
 type RequestType = InferRequestType<typeof client.api.auth.signin["$post"]>
@@ -16,11 +17,20 @@ export const useSignin = () => {
     const mutation = useMutation<ResponseType, Error, RequestType>({
         mutationFn: async ({ json }) => {
             const response = await client.api.auth.signin["$post"]({ json })
+
+            if (!response.ok) {
+                throw new Error("Failed to signin")
+            }
+
             return await response.json()
         },
         onSuccess: () => {
+            toast.success("Logged in successfully")
             router.refresh()
             queryClient.invalidateQueries({ queryKey: ["current"] })
+        },
+        onError: () => {
+            toast.error("Failed to login")
         }
     })
 

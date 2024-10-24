@@ -10,6 +10,10 @@ import { DottedSeparator } from "@/components/dotted-separator"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { ChangeEvent, useRef } from "react"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import Image from "next/image"
+import { ImageIcon } from "lucide-react"
 
 interface CreateWorkspaceProps {
     onCancel?: () => void
@@ -19,6 +23,8 @@ function CreateWorkspace({ onCancel }: CreateWorkspaceProps) {
 
     const { mutate, isPending } = useCreateWorkspace()
 
+    const inputRef = useRef<HTMLInputElement>(null)
+
     const form = useForm<z.infer<typeof createWorkspaceSchema>>({
         resolver: zodResolver(createWorkspaceSchema),
         defaultValues: {
@@ -27,7 +33,26 @@ function CreateWorkspace({ onCancel }: CreateWorkspaceProps) {
     })
 
     const onSubmit = (values: z.infer<typeof createWorkspaceSchema>) => {
-        mutate({ json: values })
+
+        const finalValues = {
+            ...values,
+            image: values.image instanceof File ? values.image : ""
+        }
+        mutate({ form: values }, {
+            onSuccess: () => {
+                form.reset()
+            }
+        })
+    }
+
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+
+        if (file) {
+            form.setValue("image", file)
+        }
+
+
     }
     return (
         <Card className="w-full h-full border-none shadow-none">
@@ -49,8 +74,39 @@ function CreateWorkspace({ onCancel }: CreateWorkspaceProps) {
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
-                            )}>
-                            </FormField>
+                            )} />
+
+                            <FormField control={form.control} name="image" render={({ field }) => (
+                                <div className="flex flex-col gapy-y-2">
+                                    <div className="flex items-center gap-x-5">
+                                        {field.value ? (
+                                            <div className="size-[72px] relative rounded-md overflow-hidden">
+                                                <Image src={field.value instanceof File ? URL.createObjectURL(field.value) : field.value} className="object-cover" fill alt="image" />
+                                            </div>
+                                        ) : (
+                                            <Avatar className="size-[72px]">
+                                                <AvatarFallback>
+                                                    <ImageIcon className="size-[32px] text-neutral-400" />
+                                                </AvatarFallback>
+                                            </Avatar>
+                                        )}
+                                        <div className="flex flex-col">
+                                            <p className="text-sm">
+                                                Workspace Icon
+                                            </p>
+                                            <p className="text-sm text-muted-foreground">
+                                                JPG, PNG, SVG or JPEG, MAX 1 mb
+                                            </p>
+
+                                            <input type="file" className="hidden" accept=".jpg, .png, .jpeg, .svg" ref={inputRef} onChange={handleImageChange} disabled={isPending} />
+
+                                            <Button type="button" disabled={isPending} variant="secondary" size="sm" className="w-fit mt-2" onClick={() => inputRef.current?.click()}>
+                                                Upload Image
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )} />
                         </div>
                         <DottedSeparator className="py-7" />
                         <div className="flex justify-between items-center">
