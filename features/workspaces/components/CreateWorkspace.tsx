@@ -38,7 +38,8 @@ function CreateWorkspace({ onCancel }: CreateWorkspaceProps) {
             ...values,
             image: values.image instanceof File ? values.image : ""
         }
-        mutate({ form: values }, {
+
+        mutate({ form: finalValues }, {
             onSuccess: () => {
                 form.reset()
             }
@@ -77,7 +78,7 @@ function CreateWorkspace({ onCancel }: CreateWorkspaceProps) {
                             )} />
 
                             <FormField control={form.control} name="image" render={({ field }) => (
-                                <div className="flex flex-col gapy-y-2">
+                                <div className="flex flex-col gap-y-2">
                                     <div className="flex items-center gap-x-5">
                                         {field.value ? (
                                             <div className="size-[72px] relative rounded-md overflow-hidden">
