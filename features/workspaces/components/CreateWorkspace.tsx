@@ -14,12 +14,15 @@ import { ChangeEvent, useRef } from "react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import Image from "next/image"
 import { ImageIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 interface CreateWorkspaceProps {
     onCancel?: () => void
 }
 
 function CreateWorkspace({ onCancel }: CreateWorkspaceProps) {
+
+    const router = useRouter()
 
     const { mutate, isPending } = useCreateWorkspace()
 
@@ -40,8 +43,9 @@ function CreateWorkspace({ onCancel }: CreateWorkspaceProps) {
         }
 
         mutate({ form: finalValues }, {
-            onSuccess: () => {
+            onSuccess: ({ data }) => {
                 form.reset()
+                router.push(`/workspaces/${data.$id}`)
             }
         })
     }

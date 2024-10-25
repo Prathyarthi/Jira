@@ -6,6 +6,7 @@ import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces"
 import WorkspaceAvatar from "@/features/workspaces/components/WorkspaceAvatar"
 import { useRouter } from "next/navigation"
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id"
+import { useCreateWorkspaceModal } from "@/features/workspaces/hooks/use-create-workspace-modal"
 
 function WorkspaceSwitcher() {
 
@@ -19,11 +20,13 @@ function WorkspaceSwitcher() {
         router.push(`/workspaces/${workspaceId}`)
     }
 
+    const { open } = useCreateWorkspaceModal()
+
     return (
         <div className="flex flex-col gap-y-2">
             <div className="flex justify-between items-center">
                 <p className="text-xs uppercase text-neutral-500">Workspaces</p>
-                <RiAddCircleFill className="text-neutral-500 cursor-pointer hover:opacity-75 transition" />
+                <RiAddCircleFill onClick={open} className="text-neutral-500 cursor-pointer hover:opacity-75 transition" />
             </div>
 
             <Select onValueChange={handleOnSelect}>
