@@ -2,7 +2,7 @@ import { getCurrent } from "@/features/auth/actions"
 import CreateWorkspace from "@/features/workspaces/components/CreateWorkspace"
 import { redirect } from "next/navigation"
 
-async function page() {
+const WorkspaceCreationPage = async () => {
 
     const user = await getCurrent()
 
@@ -17,4 +17,4 @@ async function page() {
     )
 }
 
-export default page
+export default WorkspaceCreationPage
