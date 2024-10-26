@@ -15,6 +15,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import Image from "next/image"
 import { ImageIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { cn } from "@/lib/utils"
 
 interface CreateWorkspaceProps {
     onCancel?: () => void
@@ -115,7 +116,7 @@ function CreateWorkspace({ onCancel }: CreateWorkspaceProps) {
                         </div>
                         <DottedSeparator className="py-7" />
                         <div className="flex justify-between items-center">
-                            <Button type="button" size="lg" variant="secondary" onClick={onCancel} disabled={isPending}>
+                            <Button type="button" size="lg" variant="secondary" onClick={onCancel} disabled={isPending} className={cn(!onCancel && "invisible")}>
                                 Cancel
                             </Button>
 
