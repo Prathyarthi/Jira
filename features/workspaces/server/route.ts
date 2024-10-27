@@ -149,5 +149,35 @@ const app = new Hono()
             data: workspace
         })
     })
+    .delete("/:workspaceId", sessionMiddleware, async (c) => {
+        const databases = c.get("databases")
+        const user = c.get("user")
+
+        const { workspaceId } = c.req.param()
+
+        const member = await getMember({
+            databases,
+            workspaceId: c.req.param("workspaceId"),
+            userId: user.$id
+        })
+
+        if (!member || member.role !== MemberRole.ADMIN) {
+            return c.json({
+                error: "Unauthorized"
+            }, 401)
+        }
+
+        await databases.deleteDocument(
+            DATABASE_ID,
+            WORKSPACES_ID,
+            workspaceId
+        )
+
+        return c.json({
+            success: true,
+            message: "Workspace deleted successfully",
+            data: { $id: workspaceId }
+        })
+    })
 
 export default app
