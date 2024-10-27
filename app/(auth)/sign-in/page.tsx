@@ -1,4 +1,4 @@
-import { getCurrent } from '@/features/auth/actions'
+import { getCurrent } from '@/features/auth/queries'
 import SigninComponent from '@/features/auth/components/SigninComponent'
 import { redirect } from 'next/navigation'
 import React from 'react'
