@@ -21,7 +21,7 @@ interface CreateWorkspaceProps {
     onCancel?: () => void
 }
 
-function CreateWorkspace({ onCancel }: CreateWorkspaceProps) {
+export const CreateWorkspace = ({ onCancel }: CreateWorkspaceProps) => {
 
     const router = useRouter()
 
@@ -140,5 +140,3 @@ function CreateWorkspace({ onCancel }: CreateWorkspaceProps) {
         </Card >
     )
 }
-
-export default CreateWorkspace

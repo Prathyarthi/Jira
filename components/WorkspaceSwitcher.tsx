@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id"
 import { useCreateWorkspaceModal } from "@/features/workspaces/hooks/use-create-workspace-modal"
 
-function WorkspaceSwitcher() {
+export const WorkspaceSwitcher = () => {
 
     const workspaceId = useWorkspaceId()
 
@@ -47,5 +47,3 @@ function WorkspaceSwitcher() {
         </div>
     )
 }
-
-export default WorkspaceSwitcher

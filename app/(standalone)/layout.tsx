@@ -20,3 +20,5 @@ const StandaloneLayout = ({ children }: { children: React.ReactNode }) => {
         </main>
     )
 }
+
+export default StandaloneLayout

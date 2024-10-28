@@ -1,6 +1,6 @@
-import { getCurrent } from "@/features/auth/queries"
-import CreateWorkspace from "@/features/workspaces/components/CreateWorkspace"
 import { redirect } from "next/navigation"
+import { getCurrent } from "@/features/auth/queries"
+import { CreateWorkspace } from "@/features/workspaces/components/CreateWorkspace"
 
 const WorkspaceCreationPage = async () => {
 
