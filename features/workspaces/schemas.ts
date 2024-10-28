@@ -15,3 +15,7 @@ export const updateWorkspaceSchema = z.object({
         z.string().transform((value) => value === "" ? undefined : value)
     ]).optional()
 })
+
+export const joinWorkspaceSchema = z.object({
+    code: z.string()
+})
