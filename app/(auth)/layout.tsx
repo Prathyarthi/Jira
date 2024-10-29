@@ -15,7 +15,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
         <main className="bg-neutral-100 min-h-screen">
             <div className="mx-auto max-w-screen-2xl p-4">
                 <nav className="flex justify-between items-center">
-                    <Image src="" height={56} width={152} alt="logo" />
+                    <Image src="/logo.svg" height={30} width={30} alt="logo" />
                     <Button asChild variant="secondary">
                         <Link href={pathname === "/sign-in" ? "/sign-up" : "/sign-in"}>
                             {pathname === "/sign-in" ? "Sign Up" : "Sign In"}
